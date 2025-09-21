@@ -58,9 +58,9 @@ Registra todas las acciones clave realizadas sobre los documentos para la audito
 
 ### Índices Propuestos
 Los índices son cruciales para el rendimiento de las consultas y se han diseñado para las operaciones más comunes.
-- `documents`: `{ customerId: 1, 'taxonomy.domain': 1, 'taxonomy.category': 1 }` (para filtrado eficiente)[cite: 55]. `{ 'retention.deleteAt': 1 }` (esencial para el proceso de borrado periódico)[cite: 55]. `{ 'acl.readers': 1 }` (para buscar documentos por los permisos de un usuario).
-- `documentVersions`: `{ documentId: 1, version: 1 }` (índice compuesto para asegurar la unicidad y optimizar la búsqueda de versiones)[cite: 55].
-- `auditLogs`: `{ timestamp: 1 }` (para orden cronológico de eventos)[cite: 55]. `{ documentId: 1 }` (para auditoría específica por documento)[cite: 55].
+- `documents`: `{ customerId: 1, 'taxonomy.domain': 1, 'taxonomy.category': 1 }` (para filtrado eficiente). `{ 'retention.deleteAt': 1 }` (esencial para el proceso de borrado periódico). `{ 'acl.readers': 1 }` (para buscar documentos por los permisos de un usuario).
+- `documentVersions`: `{ documentId: 1, version: 1 }` (índice compuesto para asegurar la unicidad y optimizar la búsqueda de versiones).
+- `auditLogs`: `{ timestamp: 1 }` (para orden cronológico de eventos). `{ documentId: 1 }` (para auditoría específica por documento).
 
 ## 2. Contratos API (Swagger/OpenAPI)
 
@@ -84,6 +84,17 @@ class CreateDocumentDto {
     category: string;
     docType: string;
   };
+  acl: {
+    owners: string[];
+    readers: string[];
+    updaters: string[];
+    roles: string[];
+  },
+  retention: {
+    policyId: string;
+    deleteAt: string;
+    mode: string;
+  }
 }
 ```
 **Responses**
